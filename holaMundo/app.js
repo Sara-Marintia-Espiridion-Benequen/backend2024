@@ -24,7 +24,7 @@
 //const tareasPorRealizar = tareas.filter(tarea => !tarea.hecho);
 //console.log(tareasPorRealizar)
 
-import {createServer} from 'node:http';
+/*import {createServer} from 'node:http';
 
 const server = createServer((req, res) => {
     res.write("Bienvenidos a mi primer servidor web");
@@ -32,4 +32,5 @@ const server = createServer((req, res) => {
 });
 
 server.listen(8080);
-console.log("Servidor web iniciado en 8080");
+console.log("Servidor web iniciado en 8080");*/
+
