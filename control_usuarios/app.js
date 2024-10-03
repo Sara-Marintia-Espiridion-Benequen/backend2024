@@ -2,8 +2,16 @@ const express = require("express");
 
 const app = express();
 
-app.get("/", (req, res) =>{
-    res.status(404).send("Hola mundo!");
+app.get("/usuarios", (req, res) =>{
+    const usuarios = [
+        {
+            id: 1,
+            nombre: "Sara",
+            apellido:"Espiridion",
+            email:"sarah93.ad@gmail.com",
+        },
+    ]
+    res.status(404).send(usuarios);
 })
 
 app.listen(3000, () => {
