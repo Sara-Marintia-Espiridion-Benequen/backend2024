@@ -79,7 +79,7 @@ app.post("/usuarios", (req, res) => {
 
     // Si todas las validaciones pasan, agregar el usuario
     usuarios.push({ id: usuarios.length + 1, nombre, apellido, email });
-    res.status(201).send("El usuario se agregó correctamente.");
+    res.status(200).send("El usuario se agregó correctamente.");
 });
 
 

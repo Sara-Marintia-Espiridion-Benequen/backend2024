@@ -8,7 +8,7 @@ POST http://localhost:3000/usuarios/
 content-type: application/json
 
 {
-    "nombre": "Sara",
+    "nombre": "mari",
     "apellido": "Espiridion",
-    "email": "sarah93.ad@gmail.com"
+    "email": "mari.ad@gmail.com"
 }
