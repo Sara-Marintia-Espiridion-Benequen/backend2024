@@ -8,6 +8,16 @@ POST http://localhost:3000/usuarios/
 content-type: application/json
 
 {
+    "nombre": "sara",
+    "apellido": "Espiridion",
+    "email": "sara.ad@gmail.com"
+}
+
+###
+PUT http://localhost:3000/usuarios/1
+Content-Type: application/json
+
+{
     "nombre": "mari",
     "apellido": "Espiridion",
     "email": "mari.ad@gmail.com"

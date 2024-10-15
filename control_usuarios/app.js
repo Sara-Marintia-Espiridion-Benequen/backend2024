@@ -56,8 +56,20 @@ app.get("/usuarios/:id", (req, res) => {
 app.post("/usuarios", (req, res) => {
     const { nombre, apellido, email } = req.body;
 
+    if(!nombre || !apellido || !email){
+        res.status(400).send({error: "Todos los campos son requeridos"});
+        return;
+    }
+
+    if(usuarios.find((usuario) => usuario.email === email)){
+        res.status(400).send({error: "El email ya existe"});
+        return;
+    }
+
+
+
     // Validar que el nombre esté presente
-    if (!nombre) {
+    /*if (!nombre) {
         return res.status(400).send("El campo 'nombre' es obligatorio.");
     }
 
@@ -80,8 +92,55 @@ app.post("/usuarios", (req, res) => {
     // Si todas las validaciones pasan, agregar el usuario
     usuarios.push({ id: usuarios.length + 1, nombre, apellido, email });
     res.status(200).send("El usuario se agregó correctamente.");
+});*/
+
+
+usuarios.push({iide: usuarios.length + 1, nombre, apellido, email});
+
+res.status(201).send("El usuario se agregó correctamente");
 });
 
+
+app.put("/usuarios/:id", (req, res) => {
+    const { nombre, apellido, email } = req.body;
+
+    const id = +req.params.id;
+//Debemos validar que no se repita el correo, pero debemos descartar el caso de que el correo 
+//de ese usuario en particular no se actualice
+//que permite que actualice el correo siempre y cuando que no existe en otro usurio
+    if(!nombre || !apellido || !email){
+        res.status(400).send({error: "Todos los campos son requeridos"});
+        return;
+    }
+
+    if(isNaN(id)){
+        res.status(400).send({error:"El id debe ser un número"});
+        return;
+    };
+
+    const usuario = usuarios .find((usuario) => usuario.id === +id);
+
+    if (usuario === undefined){
+        res.status(404).send({error: `El usuario con id ${id} no existe`});
+        return;
+};
+
+    //Recorre nuestro arreglo
+usuarios.forEach((usuario) => {
+    if(usuario.id === id){
+        usuario.nombre = nombre;
+        usuario.apellido = apellido;
+        usuario.email = email;
+    }
+})
+
+res.status(200).send("El usuarui se actualizó correctamente");
+});
+
+
+app.patch("/usuarios/:id", (req, res) => {
+
+})
 
 app.listen(3000, () => {
     console.log("Servidor corriendo en http://localhost:3000");
