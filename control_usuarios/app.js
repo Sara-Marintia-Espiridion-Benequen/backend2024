@@ -42,13 +42,6 @@ app.get("/usuarios/:id", (req, res) => {
 /*app.post ("/usuarios", (req, res) => { 
     const{nombre, apellido, email} = req.body;
 
-    
-    validaciones
-    -la informacion debe estar completa
-    nombre, apellido y correo. sino viene hay que devolver un error 400
-    -el email dede ser unico  400
-    
-
     usuarios.push({id: usuarios.length+ 1, nombre, apellido, email});
     res.status(201).send("El usuario se agrego correctamente");
 });*/
@@ -66,7 +59,10 @@ app.post("/usuarios", (req, res) => {
         return;
     }
 
-
+/*Tarea: validaciones
+    -la informacion debe estar completa
+    nombre, apellido y correo. sino viene hay que devolver un error 400
+    -el email dede ser unico  400*/
 
     // Validar que el nombre esté presente
     /*if (!nombre) {
@@ -105,9 +101,7 @@ app.put("/usuarios/:id", (req, res) => {
     const { nombre, apellido, email } = req.body;
 
     const id = +req.params.id;
-//Debemos validar que no se repita el correo, pero debemos descartar el caso de que el correo 
-//de ese usuario en particular no se actualice
-//que permite que actualice el correo siempre y cuando que no existe en otro usurio
+
     if(!nombre || !apellido || !email){
         res.status(400).send({error: "Todos los campos son requeridos"});
         return;
@@ -124,6 +118,10 @@ app.put("/usuarios/:id", (req, res) => {
         res.status(404).send({error: `El usuario con id ${id} no existe`});
         return;
 };
+
+//Tarea: Debemos validar que no se repita el correo, pero debemos descartar el caso de que el correo 
+//de ese usuario en particular no se actualice
+//que permite que actualice el correo siempre y cuando que no existe en otro usurio
 
 //Verificar si el correo ya existe en otro usurio
 const emailExistente = usuarios.find((usuario) => usuario.email === email && usuario.id !== id);
