@@ -125,6 +125,13 @@ app.put("/usuarios/:id", (req, res) => {
         return;
 };
 
+//Verificar si el correo ya existe en otro usurio
+const emailExistente = usuarios.find((usuario) => usuario.email === email && usuario.id !== id);
+
+if(emailExistente) {
+    return res.status(400).send({error: "El amail ya esta en uso por otro usuario"});
+};
+
     //Recorre nuestro arreglo
 usuarios.forEach((usuario) => {
     if(usuario.id === id){
