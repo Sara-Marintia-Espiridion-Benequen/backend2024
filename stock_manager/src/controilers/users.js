@@ -1,7 +1,31 @@
 const {request, response} = require('express');
 
-const getMessage = (req = request, res = response) => {
-    res.send('Hello world the users controiler!')
+const users = [
+    {id: 1, name: 'John Doe'},
+    {id: 2, name: 'Jane Doe'},
+    {id: 3, name: 'Bod Smith'},
+];
+
+const getAll = (req = request, res = response) => {
+    res.send(users);
 }
 
-module.exports = {getMessage};
+const getById = (req = request, res = response) => {
+    const {id} = req.params;
+
+    if (isNaN(id)) {
+        res.status(400).send('Invalid ID');
+        return;
+    }
+
+    const user = users.find(user => user.id === +id);
+
+    if (!user) {
+        res.status(404).send('User not found');
+        return;
+    }
+
+    res.send(user);
+}
+
+module.exports = {getAll, getById};

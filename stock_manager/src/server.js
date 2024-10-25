@@ -4,11 +4,17 @@ const usersRoutes = require('./routes/users');
 class Server {
     constructor() {
         this.app = express();
-        this.port = 3000;
+        this.port = 8000;
 
-        this.app.use(express.json);
+        this.app.use(express.json); //Es una funcion que intercepta una solicitud antes de que sea analizada por nuetro backen
+        //identifica si viene informacion en formato json, convertir de javascript a lo que json entienda
 
+        this.middlewares();
         this.routes();
+    }
+
+    middlewares() {
+        this.app.use(express.json());
     }
 
     routes() {

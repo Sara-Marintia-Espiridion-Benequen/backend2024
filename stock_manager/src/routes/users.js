@@ -1,8 +1,9 @@
 const {Router} = require('express');
-const {getMessage} = require('../controilers/users');
+const {getAll, getById} = require('../controilers/users');
 
 const router = Router();
 
-router.get('/', getMessage);
+router.get('/', getAll);
+router.get('/:id', getById);
 
 module.exports = router;
