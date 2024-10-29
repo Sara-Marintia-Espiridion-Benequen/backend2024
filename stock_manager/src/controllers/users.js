@@ -1,8 +1,8 @@
 const { request, response } = require('express');
 
 const users = [ //crear arreglo
-  { id: 1, name: 'Jeni GR' }, //los registro que se va a almacenar
-  { id: 2, name: 'Jen GR' },
+  { id: 1, name: 'Sara' }, //los registro que se va a almacenar
+  { id: 2, name: 'Marintia' },
   { id: 3, name: 'Lalis ig' },
 ];
 
