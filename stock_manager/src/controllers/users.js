@@ -1,4 +1,5 @@
 const { request, response } = require('express');
+const { usersQueries } = require('../models/users');
 
 const users = [ //crear arreglo
   { id: 1, name: 'Sara' }, //los registro que se va a almacenar
@@ -13,12 +14,21 @@ res.send('Hello Bangtan_ HELLO FROM THE USERS CONTROLLER!');
 } */
 
 // paraObtener todos los usuarios
-const getAll = (req = request, res = response) => {
-  res.send(users); //se pide que muestre el usuario
+const getAllUsers = (req = request, res = response) => {
+  let conn;
+  try {
+    conn = await.pool.getConnection();
+    const users = await.conn.query(usersQueries.getAll);
+  }catch (error) {
+    res.status(500).send(error);
+    return
+  } finally{
+    if (conn) conn.end();
+  }
 };
 
 // para Obtener un usuario por ID
-const getById = (req = request, res = response) => {
+const getUsersById = async(req = request, res = response) => {
   const { id } = req.params; ;//se acceda en el solicitud atreves de req
   //se tiene que validar un numero por id
 
@@ -27,13 +37,27 @@ const getById = (req = request, res = response) => {
     return;
   }
 
-  //hacer un arrgelo donde pasa un fincion deonde debe terner TRUBUTO Y QUE REPRESENTA EL ARRGELO
-  const user = users.find((user) => user.id === +id);
-  //si el variable de usuario termine el valor si a ningino se debe avisar al users
-  if (!user) {
-    res.status(404).send('User not found');
-    return;
+  let conn;
+  try{
+    conn = await pool.getConnection();
+    const user = conn.query(usersQueries.getById, [+id]);
+
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+  }catch(error){
+    res.status(500).send(error);
+  } finally {
+    if (conn) conn.end();
   }
+
+  
+
+ 
+  //si el variable de usuario termine el valor si a ningino se debe avisar al users
+  
   res.send(user);
 };
 
@@ -93,4 +117,4 @@ const deleteUser = (req = request, res = response) => {
   res.status(204).send(); // 204 No Content indica éxito sin contenido adicional
 };
 
-module.exports = { getAll, getById, addUser, updateUser, deleteUser }; 
+module.exports = { getAllUsers, getUsersById, addUser, updateUser, deleteUser }; 

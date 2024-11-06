@@ -1,10 +1,10 @@
 const { request, response } = require('express');
 
-/*const users = [ //crear arreglo
+const users = [ //crear arreglo
   { id: 1, name: 'Sara' }, //los registro que se va a almacenar
   { id: 2, name: 'Marintia' },
   { id: 3, name: 'Lalis ig' },
-];*/
+];
 
 /*const getMessage = (req = resquest, res=response) => { //se va a crear la funcion que responda la consulta en particular
 //la funcion () =>{} espera el route q lleva 2 parametros 
@@ -14,17 +14,11 @@ res.send('Hello Bangtan_ HELLO FROM THE USERS CONTROLLER!');
 
 // paraObtener todos los usuarios
 const getAll = (req = request, res = response) => {
-  let conn;
-  try {
-    conn = await.pool.getConnection();
-    const users = await.conn.query('SELECT * FROM USERS');
-  }catch (error) {
-    res.status(500).send('Internet server error');
-  }
+  res.send(users); //se pide que muestre el usuario
 };
 
 // para Obtener un usuario por ID
-/*const getById = (req = request, res = response) => {
+const getById = (req = request, res = response) => {
   const { id } = req.params; ;//se acceda en el solicitud atreves de req
   //se tiene que validar un numero por id
 
@@ -99,4 +93,4 @@ const deleteUser = (req = request, res = response) => {
   res.status(204).send(); // 204 No Content indica éxito sin contenido adicional
 };
 
-module.exports = { getAll, getById, addUser, updateUser, deleteUser }; */
+module.exports = { getAll, getById, addUser, updateUser, deleteUser }; 
