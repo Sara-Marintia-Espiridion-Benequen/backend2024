@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllUsers, getUsersById, addUser, updateUser, deleteUser } = require('../controllers/users');
+const { getAllUsers, getUsersById, CreateUser, updateUser, deleteUser } = require('../controllers/users');
 
 // se va a imporatar ek controlador 
 
@@ -13,7 +13,7 @@ router.get('/', getAllUsers); //el objeto de router se va a utilizar de manera r
 router.get('/:id', getUsersById);
 
 // Ruta para agregar un usuario
-router.post('/', addUser);
+router.post('/', CreateUser);
 
 // Ruta para actualizar un usuario
 router.put('/:id', updateUser);

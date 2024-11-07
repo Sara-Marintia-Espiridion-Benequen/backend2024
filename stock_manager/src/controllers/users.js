@@ -40,9 +40,8 @@ const getUsersById = async(req = request, res = response) => {
   let conn;
   try{
     conn = await pool.getConnection();
-    const user = conn.query(usersQueries.getById, [+id]);
-
-    if (!user) {
+    const user = await conn.query(usersQueries.getById, [+id]);
+    if (!user.length === 0) {
       res.status(404).send('User not found');
       return;
     }
@@ -53,25 +52,44 @@ const getUsersById = async(req = request, res = response) => {
     if (conn) conn.end();
   }
 
-  
-
- 
-  //si el variable de usuario termine el valor si a ningino se debe avisar al users
-  
-  res.send(user);
 };
 
 // paraAgregar un nuevo usuario
-const addUser = (req = request, res = response) => {
-  const { name } = req.body;
-  if (!name) {
-    res.status(400).send('Name is required');
+const CreateUser = async (req = request, res = response) => {
+  const { username, password, email} = req.body;
+  if (!!username || !password ||!email) {
+    res.status(400).send('Bad request. Some fields are missing');
     return;
   }
-  const newUser = { id: users.length + 1, name };
-  users.push(newUser);
-  res.status(201).send(newUser);
+
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    const user = conn.query(usersQueries.getByUsername,[username]);
+
+    if (!user.length > 0) {
+      res.status(400).send('Username already exists');
+      return;
+    }
+
+    const newUser = await conn.query(usersQueries.create,[username, password, email]);
+
+    if (newUser.affectecRows === 0) {
+      res.status(500).send('User could not be created');
+      return;
+    }
+
+    res.send("User created succesfully");
+  }catch(error) {
+    res.status(500).send(error)
+  }finally {
+    if (conn) conn.end();
+  }
 };
+
+
+
+
 
 // Actualizar un usuario existente
 const updateUser = (req = request, res = response) => {
@@ -117,4 +135,4 @@ const deleteUser = (req = request, res = response) => {
   res.status(204).send(); // 204 No Content indica éxito sin contenido adicional
 };
 
-module.exports = { getAllUsers, getUsersById, addUser, updateUser, deleteUser }; 
+module.exports = { getAllUsers, getUsersById, CreateUser, updateUser, deleteUser }; 
