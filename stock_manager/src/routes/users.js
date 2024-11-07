@@ -1,24 +1,13 @@
-const { Router } = require('express');
-const { getAllUsers, getUsersById, CreateUser, updateUser, deleteUser } = require('../controllers/users');
-
-// se va a imporatar ek controlador 
+const {Router} = require('express');
+const {getAllUsers, CreateUser, update, remove, getUserById} = require('../controllers/users');
 
 const router = Router();
 
-// Ruta para obtener todos los usuarios
-router.get('/', getAllUsers); //el objeto de router se va a utilizar de manera regular como express que sea de metodo GET
-//se va a definir la ruta se debe ser realitica q se puso en resquets, bueno es donde se envia la solicitud al controlador
-
-// Ruta para obtener un usuario por ID
-router.get('/:id', getUsersById);
-
-// Ruta para agregar un usuario
+router.get('/', getAllUsers);
+router.get('/:id', getUserById);
 router.post('/', CreateUser);
+router.put('/:id', update);
+router.delete('/:id', remove);
 
-// Ruta para actualizar un usuario
-router.put('/:id', updateUser);
-
-// Ruta para eliminar un usuario
-router.delete('/:id', deleteUser);
 
 module.exports = router;
