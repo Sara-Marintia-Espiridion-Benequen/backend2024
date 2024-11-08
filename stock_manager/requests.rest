@@ -1,7 +1,9 @@
 GET http://localhost:3000/users/
 
+//Buscar un usuario en especifico
 ###
-GET http://localhost:3000/users/6
+GET http://localhost:3000/users/2
+
 ### Crear nuevo usuario
 POST http://localhost:3000/users/
 Content-Type: application/json
@@ -9,16 +11,18 @@ Content-Type: application/json
 {
     "username": "Isaias",
     "password": "12345",
-    "email" : "isaias@gmail.com"
+    "email": "isaias@gmail.com"
 }
 
 ### Actualizar usuario
-PUT http://localhost:3000/users/1
+PUT http://localhost:3000/users/2
 Content-Type: application/json
 
 {
-    "name": "Jose"
+    "username": "Maria",
+    "password": "1909",
+    "email": "mariafer@gmail.com"
 }
 
 ### Eliminar usuario
-DELETE http://localhost:3000/users/6
+DELETE http://localhost:3000/users/4
