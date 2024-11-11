@@ -1,8 +1,9 @@
+//Mostrar todos los usuarios
 GET http://localhost:3000/users/
 
 //Buscar un usuario en especifico
 ###
-GET http://localhost:3000/users/2
+GET http://localhost:3000/users/3
 
 ### Crear nuevo usuario
 POST http://localhost:3000/users/
@@ -10,8 +11,8 @@ Content-Type: application/json
 
 {
     "username": "Isaias",
-    "password": "12345",
-    "email": "isaias@gmail.com"
+    "password": "2905",
+    "email": "IsaSpiry@gmail.com"
 }
 
 ### Actualizar usuario

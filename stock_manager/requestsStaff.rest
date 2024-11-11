@@ -1,0 +1,35 @@
+//Mostrar todos los usuarios
+GET http://localhost:3000/staff/
+
+//Buscar un usuario en especifico
+###
+GET http://localhost:3000/staff/1
+
+### Crear nuevo usuario
+POST http://localhost:3000/staff/
+Content-Type: application/json
+
+{
+    "first_name": "John",
+    "last_name": "Doe",
+    "birth_date": "1990-01-01",
+    "gender": "M",
+    "phone_number": "1234567890",
+    "email": "john.doe@example.com",
+    "address": "123 Main St",
+    "is_active": true,
+    "user_id": 1
+}
+
+### Actualizar usuario
+PUT http://localhost:3000/staff/2
+Content-Type: application/json
+
+{
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "email": "jane.smith@example.com"
+}
+
+### Eliminar usuario
+DELETE http://localhost:3000/staff/1
