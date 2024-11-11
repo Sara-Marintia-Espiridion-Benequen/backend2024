@@ -1,6 +1,7 @@
 const { request, response } = require('express');
 const pool = require('../../db/connection');
-const { staffQueries } = require('../models/staffQueries');
+const { staffQueries } = require('../models/staff');
+const { usersQueries } = require('../models/users');
 
 // Obtener todos los miembros del staff
 const getAllStaff = async (req = request, res = response) => {
@@ -41,34 +42,37 @@ const getStaffById = async (req = request, res = response) => {
 };
 
 // Crear un nuevo miembro del staff
-const createStaff = async (req = request, res = response) => {
-    const { first_name, last_name, birth_date, gender, phone_number, email, address, is_active, user_id } = req.body;
+const createStaff = async (req, res) => {
+    const { first_name, last_name, birth_date, gender, phone_number, email, address, is_active } = req.body;
+    const user_id = req.params.id; // Aquí tomamos el ID de la URL
 
-    if (!first_name || !last_name || !birth_date || !gender || !phone_number || !email || !address || is_active === undefined || !user_id) {
-        res.status(400).send('Bad Request. Some fields are missing');
-        return;
-    }
-
+    // Validar si el user_id existe en la tabla users
     let conn;
     try {
         conn = await pool.getConnection();
-        
-        // Verificar si el user_id existe en la tabla users
-        const userCheck = await conn.query(staffQueries.checkUserId, [user_id]);
-        if (userCheck.length === 0) {
-            res.status(404).send('User ID not found in users table');
-            return;
+        const userExists = await conn.query('SELECT id FROM users WHERE id = ?', [user_id]);
+
+        // Verificamos si el user_id existe
+        if (userExists.length === 0) {
+            return res.status(404).send('User not found');
         }
 
-        const newStaff = await conn.query(staffQueries.create, [first_name, last_name, birth_date, gender, phone_number, email, address, is_active, user_id]);
-        if (newStaff.affectedRows === 0) {
-            res.status(500).send('Staff member could not be created');
-            return;
+        // Insertamos el nuevo staff con el user_id obtenido
+        const query = `
+            INSERT INTO staff (first_name, last_name, birth_date, gender, phone_number, email, address, is_active, user_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        const result = await conn.query(query, [first_name, last_name, birth_date, gender, phone_number, email, address, is_active, user_id]);
+
+        if (result.affectedRows > 0) {
+            res.status(201).send('Staff created successfully');
+        } else {
+            res.status(500).send('Failed to create staff');
         }
-        res.status(201).send('Staff member created successfully');
     } catch (error) {
-        res.status(500).send(error);
-        return;
+        console.error(error);
+        res.status(500).send('Error in server');
     } finally {
         if (conn) conn.end();
     }

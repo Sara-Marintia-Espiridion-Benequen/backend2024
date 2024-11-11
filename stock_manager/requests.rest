@@ -10,9 +10,9 @@ POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-    "username": "Isaias",
-    "password": "2905",
-    "email": "IsaSpiry@gmail.com"
+    "username": "Laura",
+    "password": "3012",
+    "email": "Laura@gmail.com"
 }
 
 ### Actualizar usuario
