@@ -1,12 +1,10 @@
 const {request, response} = require ('express');
+const bcrypt = require ('bcrypt');
 const pool = require('../../db/connection');
 const { usersQueries } = require('../models/users');
 
-//const users = [
-//    {id: 1, name: 'Jhon Doe'},
-//    {id: 2, name: 'Jane Doe'},
-//    {id: 3, name: 'Bob Smith'},
-//];
+const saltRounds = 10;
+
 
 const getAllUsers = async (req = request, res= response) => {
     let conn;
@@ -56,6 +54,7 @@ const CreateUser = async (req = request, res = response) => {
         res.status(400).send('Bad Request. Some fields are missing');
         return;
     }
+
     let conn;
     try{
         conn = await pool.getConnection();
@@ -65,7 +64,10 @@ const CreateUser = async (req = request, res = response) => {
             res.status(409).send('Username already exits');
             return;
         }
-        const newUser = await conn.query(usersQueries.create, [username, password, email]);
+
+        const  hashPassword = await bcrypt.hash(password, saltRounds);
+
+        const newUser = await conn.query(usersQueries.create, [username, hashPassword, email]);
         
         if(newUser.affectedRows === 0){
             res.status(500).send('user could not be created');
@@ -79,6 +81,40 @@ const CreateUser = async (req = request, res = response) => {
         if(conn) conn.end();
     }
 };
+
+const loginUsers = async (req = request, res = response) => {
+    const {username, password} = req.body;
+
+    if(!username || !password) {
+        res.status(400).send('username and Password are mandatory');
+        return;
+    }
+
+    let conn;
+    try{
+        conn = await pool.getConnection();
+
+        const user = await conn.query(usersQueries.getByUsername, [username]);
+
+        if(user.length === 0){
+            res.status(404).send('User not found');
+            return;
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user[0].password);
+
+        if(!passwordMatch) {
+            res.status(403).send('Bad username or password');
+            return;
+        }
+
+        res.send('Login in');
+    }catch(error){
+        res.status(500).send(error);
+    }finally {
+        if (conn) conn.end()
+    }
+}
 
 //Actualizar
 const updateUser = async (req = request, res = response) => {
@@ -150,4 +186,11 @@ const deleteUser = async (req = request, res = response) => {
 
 }
 
-module.exports = { getAllUsers, getUserById, CreateUser, updateUser, deleteUser };
+module.exports = {
+    getAllUsers, 
+    getUserById, 
+    CreateUser, 
+    loginUsers, 
+    updateUser, 
+    deleteUser 
+};

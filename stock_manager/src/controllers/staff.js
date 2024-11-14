@@ -1,7 +1,7 @@
 const { request, response } = require('express');
 const pool = require('../../db/connection');
 const { staffQueries } = require('../models/staff');
-const { usersQueries } = require('../models/users');
+const { usersQueries } = require('../models/users'); //Puede no llevarlo
 
 // Obtener todos los miembros del staff
 const getAllStaff = async (req = request, res = response) => {
@@ -43,8 +43,17 @@ const getStaffById = async (req = request, res = response) => {
 
 // Crear un nuevo miembro del staff
 const createStaff = async (req, res) => {
-    const { first_name, last_name, birth_date, gender, phone_number, email, address, is_active } = req.body;
-    const user_id = req.params.id; // Aquí tomamos el ID de la URL
+    const { first_name, 
+        last_name, 
+        birth_date, 
+        gender, 
+        phone_number, 
+        email, 
+        address, 
+        is_active } = req.body;
+    const user_id = req.params.id; // Aquí tomamos el ID de la URL. Este se puede integrar al de arriba el body
+
+    //se mete el if si cualquiera de los datos falta
 
     // Validar si el user_id existe en la tabla users
     let conn;

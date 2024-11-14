@@ -1,5 +1,5 @@
 const staffQueries = {
-    getAllStaff: 'SELECT * FROM staff',
+    getAllStaff: 'SELECT * FROM staff', //esta bien
     getById: 'SELECT * FROM staff WHERE id = ?',
     create: `
         INSERT INTO staff (first_name, last_name, birth_date, gender, phone_number, email, address, is_active, user_id, created_at, updated_at)
@@ -11,7 +11,7 @@ const staffQueries = {
         WHERE id = ?
     `,
     delete: 'DELETE FROM staff WHERE id = ?',
-    checkUserId: 'SELECT * FROM users WHERE id = ?'
+    checkUserId: 'SELECT * FROM users WHERE id = ?' //modificarlo no va
 };
 
 module.exports = { staffQueries };

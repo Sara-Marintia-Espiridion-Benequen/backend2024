@@ -10,9 +10,9 @@ POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-    "username": "Laura",
-    "password": "3012",
-    "email": "Laura@gmail.com"
+    "username": "Iro",
+    "password": "Jarvis",
+    "email": "Iro@hotmail.com"
 }
 
 ### Actualizar usuario
@@ -26,4 +26,13 @@ Content-Type: application/json
 }
 
 ### Eliminar usuario
-DELETE http://localhost:3000/users/4
+DELETE http://localhost:3000/users/7
+
+###
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "username": "Iro",
+    "password": "Jarvis"
+}

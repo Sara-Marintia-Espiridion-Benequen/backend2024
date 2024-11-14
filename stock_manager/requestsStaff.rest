@@ -6,15 +6,15 @@ GET http://localhost:3000/staff/
 GET http://localhost:3000/staff/1
 
 ### Crear nuevo usuario
-POST http://localhost:3000/staff/2
+POST http://localhost:3000/staff/1
 Content-Type: application/json
 
 {
-    "first_name": "Martha",
-    "last_name": "Escamilla",
-    "birth_date": "1990-01-01",
-    "gender": "F",
-    "phone_number": "1234567890",
+    "first_name": "Mario",
+    "last_name": "Martinez",
+    "birth_date": "1890-08-04",
+    "gender": "M",
+    "phone_number": "Martha",
     "email": "Martha@gmail.com",
     "address": "Monterrey",
     "is_active": true
@@ -25,10 +25,16 @@ PUT http://localhost:3000/staff/2
 Content-Type: application/json
 
 {
-    "first_name": "Jane",
-    "last_name": "Smith",
-    "email": "jane.smith@example.com"
+    "first_name": "Mario",
+    "last_name": "Martinez",
+    "birth_date": "1890-08-04",
+    "gender": "M",
+    "phone_number": "Martha",
+    "email": "Martha@gmail.com",
+    "address": "Monterrey",
+    "is_active": true,
+    //"user_id": 1
 }
 
 ### Eliminar usuario
-DELETE http://localhost:3000/staff/8
+DELETE http://localhost:3000/staff/13
