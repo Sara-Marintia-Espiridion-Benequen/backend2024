@@ -36,3 +36,13 @@ Content-Type: application/json
     "username": "Iro",
     "password": "Jarvis"
 }
+
+###
+PUT http://localhost:3000/users/loginUpdate
+Content-Type: application/json
+
+{
+    "username": "Maria",
+    "password": "1909",
+    "email": "mariafer@gmail.com"
+};

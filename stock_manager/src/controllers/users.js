@@ -151,6 +151,50 @@ const updateUser = async (req = request, res = response) => {
     }
     };
 
+    //Cifrar Contraseña en Actualizar el Usuario
+    const loginUpdate = async (req = request, res = response) => {
+        const { username, password } = req.body;
+    
+        if (!username || !password) {
+            res.status(400).send('Username and Password are mandatory');
+            return;
+        }
+    
+        let conn;
+        try {
+            conn = await pool.getConnection();
+    
+            const user = await conn.query(usersQueries.getByUsername, [username]);
+    
+            if (user.length === 0) {
+                res.status(404).send('User not found');
+                return;
+            }
+    
+            const passwordMatch = await bcrypt.compare(password, user[0].password);
+    
+            if (!passwordMatch) {
+                res.status(403).send('Bad username or password');
+                return;
+            }
+    
+            // Opcional: puedes retornar datos adicionales del usuario autenticado.
+            res.status(200).json({
+                message: 'Login successful',
+                user: {
+                    id: user[0].id,
+                    username: user[0].username,
+                    email: user[0].email,
+                },
+            });
+        } catch (error) {
+            res.status(500).send(error.message);
+        } finally {
+            if (conn) conn.end();
+        }
+    };
+    
+
 //Eliminar
 const deleteUser = async (req = request, res = response) => {
     const { id } = req.params;
@@ -192,5 +236,6 @@ module.exports = {
     CreateUser, 
     loginUsers, 
     updateUser, 
+    loginUpdate,
     deleteUser 
 };
