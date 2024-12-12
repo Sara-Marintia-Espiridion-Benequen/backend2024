@@ -120,14 +120,14 @@ const updatePokemon = async (req = request, res = response) =>{
     try {
       conn = await pool.getConnection();
   
-      // Verificar si el usuario existe
+      // Revisar si el usuario existe
       const [pokemons] = await conn.query(pokemonModel.getById, [+id]);
       if (!pokemons) {
         res.status(404).send("Pokemon not found");
         return;
       }
   
-      // Verificar si el correo electrónico ya está en uso por otro usuario
+      // cehcar si el correo electrónico ya está en uso por otro usuario
       const [nameExist] = await conn.query(pokemonModel.namevalid, [name, id]);
       const [imageExist] = await conn.query(pokemonModel.imagevalid, [image, id]);
       if (nameExist) {

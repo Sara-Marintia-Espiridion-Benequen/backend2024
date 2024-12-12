@@ -8,10 +8,12 @@ POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-"first_name": "Elizabeth", 
+
+"first_name": "Eli", 
 "last_name": "Espiridion Benequen", 
-"email" : "elispiry@gmail.com", 
+"email" : "eliespiridionbenequen@gmail.com", 
 "password": "MyPassword123"
+
 }
 
 ###
@@ -19,9 +21,11 @@ PUT http://localhost:3000/users/2
 Content-Type: application/json
 
 {
-"first_name": "Juan David", 
-"last_name": "Teodoro Pavon", 
+
+"first_name": "Juan ", 
+"last_name": "Martínez Pavon", 
 "email" : "teodoropavonjuan@gmail.com"
+
 }
 
 ### 
